@@ -51,12 +51,14 @@ end
 if #mods > 0 then
    Notify('Reminder: The following moderators are in your server ' .. table.concat(mods, ", " ))
 else
-   Notify('Mo moderators online. HACK!')
+   Notify('No moderators online. HACK!')
 end
 
 Players.PlayerAdded:Connect(function(player)
    if #mods > 0 then
       Notify('Reminder: The following moderators are in your server ' .. table.concat(mods, ", " ))
+   else
+    Notify('Reminder: Still no mods online. Continue cheating.')
    end
 end)
 
@@ -258,7 +260,7 @@ local Section6 = CarTab:CreateSection('This Can only be done ONCE PER car')
         wallet.Position = Player.Character.Head.Position + Vector3.new(0, 1, 0)
         end
     end
-    
+
 end
 
 local Section4 = PlayerTab:CreateSection('Miscellaneous')
@@ -415,5 +417,5 @@ local KnifeToggle = GunTab:CreateToggle({
 Rayfield:LoadConfiguration()
 
 ------------------------------------------------------------------------------------------------------------------------
-loadstring(game:HttpGet('https://raw.githubusercontent.com/WaxSoftware/SoftwareRepository/main/NHCFunctions'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/WaxSoftware/SoftwareRepository/main/NHCFunctions'))() -- functions
 ------------------------------------------------------------------------------------------------------------------------
