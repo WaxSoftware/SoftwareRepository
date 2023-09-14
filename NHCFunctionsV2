@@ -96,9 +96,6 @@ function InstantReload(togglevalue)
          if animation.Animation.AnimationId:find('8757154656') and togglevalue == true then
              animation:AdjustSpeed(1000)
              animation:AdjustWeight(0)
-         elseif togglevalue == false then
-           animation:AdjustSpeed(1)
-           animation:AdjustWeight(0)
          end
      end
  end)
