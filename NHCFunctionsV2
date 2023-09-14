@@ -19,6 +19,7 @@ getgenv().SilentAimEnabled = false
 
 -----------------------------------------------------
 
+_G.AnimationsDisabled = false
 _G.CashGrabLoaded = false
 _G.CashGrab = false
 
@@ -112,6 +113,21 @@ end
 
 function Aimbot(togglevalue)
   getgenv().ExunysDeveloperAimbot.Settings.Enabled = togglevalue
+end
+
+function RemoveAnimations(togglevalue)
+  _G.AnimationsDisabled = togglevalue
+  if not _G.AnimationsDiabled then return end
+  RunService.Heartbeat:Connect(function()
+    local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
+    for _,animation in pairs(AnimationTracksInPlayer) do
+      local PlayingAnimation = animation.Animation.AnimationId
+
+      if PlayingAnimation:find('8757154017') or PlayingAnimation:find('8757153271') then
+				animation:Stop()
+			end
+    end
+  end)
 end
 
 function SilentAim(togglevalue)
