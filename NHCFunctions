@@ -2,6 +2,7 @@ local RunService = game:GetService( 'RunService' )
 local UserInputService = game:GetService( 'UserInputService' )
 local Tweening = require(game.Players.LocalPlayer:FindFirstChild("Tweening", true))
 local vehiclesModule = require(game.ReplicatedStorage.Databases.Vehicles)
+local BankController = require(game.Players.LocalPlayer:FindFirstChild("BankController", true))
 local Player = game.Players.LocalPlayer
 
 _G.CashGrab = false
@@ -98,21 +99,8 @@ game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer")
 end
 
 function DepositAllCash()
-    local Amount = 0
-    local PlayerUI = game.Players.LocalPlayer.PlayerGui
-    for _,uipart in(PlayerUI:GetChildren()) do
-        if uipart.Name == 'Information' then
-            for _,framepart in(uipart:GetDescendants()) do
-                if framepart.Name == 'BankFrame' then
-                    if framepart:FindFirstChild('IconLabel') then
-                        if framepart.IconLabel.ImageRectOffset == Vector2.new(44, 0) then
-                            Amount = tonumber(framepart.TextLabel.Text.sub(framepart.TextLabel.Text, 2))
-                        end
-                    end
-                end
-            end
-        end
-    end
+
+   local Amount = BankController.GetBalance("Cash")
 
     local args = {
         [1] = "635",
