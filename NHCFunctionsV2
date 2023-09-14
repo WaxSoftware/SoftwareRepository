@@ -122,7 +122,6 @@ function RemoveAnimations(togglevalue)
 		local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
 		for _,animation in pairs(AnimationTracksInPlayer) do
 			local PlayingAnimation = animation.Animation.AnimationId
-			print(_G.AnimationsDisabled)
 			if PlayingAnimation:find('8757154017') or PlayingAnimation:find('8757153271') then
 				animation:Stop()
 			end
