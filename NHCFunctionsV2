@@ -117,7 +117,7 @@ end
 
 function RemoveAnimations(togglevalue)
 	_G.AnimationsDisabled = togglevalue
-	while _G.AnimationsDiabled do
+	while _G.AnimationsDisabled do
 		wait()
 		local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
 		for _,animation in pairs(AnimationTracksInPlayer) do
