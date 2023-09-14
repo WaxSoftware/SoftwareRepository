@@ -9,6 +9,12 @@ local Remotes = ReplicatedStorage.Remotes
 local Player = game.Players.LocalPlayer
 -----------------------------------------------------
 
+_G.CashGrabLoaded = false
+_G.CashGrab = false
+
+
+-- Cash Functions
+-----------------------------------------------------
 function WithdrawCash(Amount)
   local args = {[1] = "635", [2] = "Bank", [3] = "Cash", [4] = Amount}
   Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
@@ -19,3 +25,21 @@ function DepositCash(Amount)
   local args = {[1] = "635", [2] = "Cash", [3] = "Bank", [4] = Amount}
    game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
 end
+
+function GrabCash()
+  if _G.CashGrabLoaded then
+      Notify('CashGrab was already loaded.')
+      return
+  end
+  Notify('Cash Stealer Loaded.')
+  UserInputService.InputBegan:Connect(function(Input)
+      if Input.KeyCode == Enum.KeyCode.Q then
+          Notify('CashGrab Toggle: ' .. tostring(not _G.CashGrab))
+          _G.CashGrab = not _G.CashGrab
+          RunService.Heartbeat:Connect(GrabWallet)
+      end
+  end)
+  _G.CashGrabLoaded = true
+end
+-----------------------------------------------------
+
