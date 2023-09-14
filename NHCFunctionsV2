@@ -26,6 +26,19 @@ function DepositCash(Amount)
    game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
 end
 
+function GrabWallet()
+    
+  for _,wallet in(game.workspace:GetChildren()) do
+      if wallet.Name == 'Cash' and _G.CashGrab then
+      local check = wallet
+      firetouchinterest(Player.Character.HumanoidRootPart, wallet)
+      wallet.CanCollide = false
+      wallet.Position = Player.Character.HumanoidRootPart.Position
+      end
+  end
+  
+end
+
 function GrabCash()
   if _G.CashGrabLoaded then
       Notify('CashGrab was already loaded.')
@@ -42,17 +55,6 @@ function GrabCash()
   _G.CashGrabLoaded = true
 end
 
-function GrabWallet()
-    
-  for _,wallet in(game.workspace:GetChildren()) do
-      if wallet.Name == 'Cash' and _G.CashGrab then
-      local check = wallet
-      firetouchinterest(Player.Character.HumanoidRootPart, wallet)
-      wallet.CanCollide = false
-      wallet.Position = Player.Character.HumanoidRootPart.Position
-      end
-  end
-  
-end
+
 -----------------------------------------------------
 
