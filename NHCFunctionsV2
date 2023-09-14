@@ -7,11 +7,20 @@ local vehiclesModule = require(game.ReplicatedStorage.Databases.Vehicles)
 local BankController = require(game.Players.LocalPlayer:FindFirstChild("BankController", true))
 local Remotes = ReplicatedStorage.Remotes
 local Player = game.Players.LocalPlayer
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Aimbot-V3/main/src/Aimbot.lua"))()()
+getgenv().ExunysDeveloperAimbot.Settings.Enabled = false
+
+loadstring(game:HttpGet('https://pastebin.com/raw/VWmAvKwd', true))()
+getgenv().RageEnabled = false
+
+loadstring(game:HttpGet('https://pastebin.com/raw/fmL08NnK', true))()
+getgenv().SilentAimEnabled = false
+
 -----------------------------------------------------
 
 _G.CashGrabLoaded = false
 _G.CashGrab = false
-
 
 -- Cash Functions
 -----------------------------------------------------
@@ -59,9 +68,60 @@ end
 -- Player Tab
 -----------------------------------------------------
 
+function UnnamedESP()
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua', true))()
+end
+
+function ChatSpy()
+  loadstring(game:HttpGet('https://pastebin.com/raw/k9Ez2Lnr', true))()
+end
+
 function toLocation(Coordinates, Location)
   Player.Character:MoveTo(Coordinates)
   Notify('Teleported to ' .. Location)
 end
 
+-----------------------------------------------------
+
+-- Gun Tab
+-----------------------------------------------------
+
+function noRecoil()
+  Tweening.NewRecoilTween = function() end
+end
+
+function InstantReload(togglevalue)
+  RunService.Heartbeat:Connect(function()
+     for _, animation in pairs(game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+         if animation.Animation.AnimationId:find('8757154656') and togglevalue == true then
+             animation:AdjustSpeed(1000)
+             animation:AdjustWeight(0)
+         elseif togglevalue == false then
+           animation:AdjustSpeed(1)
+           animation:AdjustWeight(0)
+         end
+     end
+ end)
+end
+
+function AutomaticGun(Value)
+  for _,t in pairs(getgc(true)) do
+     if typeof(t) == "table" and rawget(t, "AmmoReady") then 
+         rawset(t, "AmmoReady", true)
+         rawset(t, "Auto", Value)
+     end
+ end
+end
+
+function Aimbot(togglevalue)
+  getgenv().ExunysDeveloperAimbot.Settings.Enabled = togglevalue
+end
+
+function SilentAim(togglevalue)
+  getgenv().SilentAimEnabled = togglevalue
+end
+
+function RageKnife(togglevalue)
+  getgenv().RageEnabled = togglevalue
+end
 -----------------------------------------------------
