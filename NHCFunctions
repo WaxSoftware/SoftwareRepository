@@ -96,9 +96,13 @@ function noRecoil()
    Tweening.NewRecoilTween = function() end
 end
 
-function RemoveAnimations()
+function RemoveAnimations(togglevalue)
+  
+  getgenv().AnimationsDisabled = togglevalue
+
   if not getgenv().AnimationsDisabled then return end
-	RunService.Heartbeat:Connect(function()
+	
+  RunService.Heartbeat:Connect(function()
 
 		local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
 	
