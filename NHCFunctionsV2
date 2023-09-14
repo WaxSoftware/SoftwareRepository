@@ -41,5 +41,18 @@ function GrabCash()
   end)
   _G.CashGrabLoaded = true
 end
+
+function GrabWallet()
+    
+  for _,wallet in(game.workspace:GetChildren()) do
+      if wallet.Name == 'Cash' and _G.CashGrab then
+      local check = wallet
+      firetouchinterest(Player.Character.HumanoidRootPart, wallet)
+      wallet.CanCollide = false
+      wallet.Position = Player.Character.HumanoidRootPart.Position
+      end
+  end
+  
+end
 -----------------------------------------------------
 
