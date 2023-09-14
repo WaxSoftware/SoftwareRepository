@@ -1,0 +1,15 @@
+-----------------------------------------------------
+local RunService = game:GetService( 'RunService' )
+local ReplicatedStorage = game:GetService( 'ReplicatedStorage' )
+local UserInputService = game:GetService( 'UserInputService' )
+local Tweening = require(game.Players.LocalPlayer:FindFirstChild("Tweening", true))
+local vehiclesModule = require(game.ReplicatedStorage.Databases.Vehicles)
+local BankController = require(game.Players.LocalPlayer:FindFirstChild("BankController", true))
+local Remotes = ReplicatedStorage.Remotes
+local Player = game.Players.LocalPlayer
+-----------------------------------------------------
+
+function WithdrawCash(Amount)
+  local args = {[1] = "635", [2] = "Bank", [3] = "Cash", [4] = Amount}
+  Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
+end
