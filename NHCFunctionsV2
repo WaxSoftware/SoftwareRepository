@@ -54,7 +54,14 @@ function GrabCash()
   end)
   _G.CashGrabLoaded = true
 end
-
-
 -----------------------------------------------------
 
+-- Player Tab
+-----------------------------------------------------
+
+function toLocation(Coordinates, Location)
+  Player.Character:MoveTo(Coordinates)
+  Notify('Teleported to ' .. Location)
+end
+
+-----------------------------------------------------
