@@ -117,18 +117,22 @@ end
 
 function RemoveAnimations(togglevalue)
   _G.AnimationsDisabled = togglevalue
-  if _G.AnimationsDiabled == false then return end
-  RunService.Heartbeat:Connect(function()
-    local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
-    for _,animation in pairs(AnimationTracksInPlayer) do
-      local PlayingAnimation = animation.Animation.AnimationId
-	print('working animations' .. tostring(_G.AnimationsDisabled))
-      if PlayingAnimation:find('8757154017') or PlayingAnimation:find('8757153271') then
-				animation:Stop()
-			end
-
-    end
-  end)
+  if _G.AnimationsDiabled == false then 
+    return 
+  else
+    RunService.Heartbeat:Connect(function()
+      local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
+      for _,animation in pairs(AnimationTracksInPlayer) do
+        local PlayingAnimation = animation.Animation.AnimationId
+        print(_G.AnimationsDisabled)
+        if PlayingAnimation:find('8757154017') or PlayingAnimation:find('8757153271') then
+          animation:Stop()
+        end
+  
+      end
+    end)
+  end
+  
 end
 
 function SilentAim(togglevalue)
