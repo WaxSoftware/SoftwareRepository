@@ -1,0 +1,77 @@
+-- Startup Functions --
+
+-- Notifications
+------------------------------------------------
+function Notify(Text)
+   local notif = require(game:GetService("Players").LocalPlayer.PlayerScripts.CoreClient.NotificationHandler)
+   notif.NewNotification(Text, "WAXHAX")
+end    
+------------------------------------------------
+
+-- Remote Namer
+------------------------------------------------
+local Event, Func do 
+   for _, v in getgc(true) do
+       if typeof(v) == "table" then
+           if rawget(v, "Verify") and typeof(v.Verify) == "Instance" then
+               Func = v
+           elseif rawget(v, "Drown") and typeof(v.Drown) == "Instance" then
+               Event = v
+           end
+       end
+   end
+end
+
+for _, RemoteList in {Event, Func} do
+   for Name, Remote in RemoteList do
+       Remote.Name = Name
+   end
+end
+
+-- Moderator Notifications
+------------------------------------------------
+local Players = game:GetService("Players")
+
+local blacklist = {
+   'FatherApoc',
+   'Squareheaddude',
+   'vanzeisok',
+   'da3nieI',
+   'cityWARE_Remade',
+   'ThreateningRevolute',
+   'isanzw',
+   'Syneths',
+   'ziaxun',
+   'domieisok',
+}
+
+local couldbemod = Players:GetChildren()
+local mods = {}
+
+for _, plr in couldbemod do
+    if table.find(blacklist, plr.Name) then
+        table.insert(mods, plr.Name)
+    end
+end
+
+if #mods > 0 then
+   Notify('Reminder: The following moderators are in your server ' .. table.concat(mods, ", " ))
+else
+   Notify('No moderators online. Enjoy your time!')
+end
+
+Players.PlayerAdded:Connect(function(player)
+   if #mods > 0 then
+      Notify('Reminder: The following moderators are in your server ' .. table.concat(mods, ", " ))
+   else
+    Notify('Reminder: Still no moderators online.')
+   end
+end)
+
+Players.PlayerAdded:Connect(function(player)
+   if table.find(blacklist, player.Name) then
+       LargeNotify('Player ' .. player.Name .. ' has joined the server (This is a Moderator).')
+   end
+end)
+------------------------------------------------
+
