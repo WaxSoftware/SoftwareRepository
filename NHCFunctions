@@ -97,6 +97,7 @@ function noRecoil()
 end
 
 function RemoveAnimations()
+  if not getgenv().AnimationsDisabled then return end
 	RunService.Heartbeat:Connect(function()
 
 		local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
