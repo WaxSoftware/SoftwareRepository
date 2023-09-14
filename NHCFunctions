@@ -19,7 +19,7 @@ function Aimbot(togglevalue)
 end
 
 function toLocation(Coordinates)
-    Player.Character:MoveTo(Coordinates))
+    Player.Character:MoveTo(Coordinates)
     Notify('Teleported to Bank')
 end
 
