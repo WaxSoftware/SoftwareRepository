@@ -6,6 +6,30 @@ function Notify(Text)
    local notif = require(game:GetService("Players").LocalPlayer.PlayerScripts.CoreClient.NotificationHandler)
    notif.NewNotification(Text, "WAXHAX")
 end    
+
+function LargeNotify(TextInput)
+   local LargeNotifyScreen = Instance.new('ScreenGui')
+    LargeNotifyScreen.Parent = game.CoreGui
+    LargeNotifyScreen.IgnoreGuiInset = true
+   local LargeNotifyFrame = Instance.new('Frame')
+   LargeNotifyFrame.Parent = LargeNotifyScreen
+   LargeNotifyFrame.Name = 'LargeNotifyFrame'
+   LargeNotifyFrame.Transparency = 0.9
+   LargeNotifyFrame.BackgroundColor3 = Color3.new(255, 0, 0)
+   LargeNotifyFrame.Position = UDim2.new(0,0,0,0)
+   LargeNotifyFrame.Size = UDim2.new(1,0,1,0)
+   local LargeNotifyFrameLabel = Instance.new('TextLabel')
+   LargeNotifyFrameLabel.Parent = LargeNotifyFrame
+   LargeNotifyFrameLabel.Position = UDim2.new(0,0,0,0)
+   LargeNotifyFrameLabel.Size = UDim2.new(1,0,1,0)
+   LargeNotifyFrameLabel.BackgroundTransparency = 1
+   LargeNotifyFrameLabel.Text = TextInput 
+   LargeNotifyFrameLabel.Font = 'Gotham'
+   LargeNotifyFrameLabel.TextColor3 = Color3.new(30, 30, 30)
+   LargeNotifyFrameLabel.TextSize = 48
+   wait(2)
+   LargeNotifyScreen:Destroy()
+end
 ------------------------------------------------
 
 -- Remote Namer
