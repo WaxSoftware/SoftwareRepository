@@ -18,43 +18,9 @@ function Aimbot(togglevalue)
    getgenv().ExunysDeveloperAimbot.Settings.Enabled = togglevalue
 end
 
-function toLocation()
-    if LocationDropdown.CurrentOption[1] == 'Bank' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(-1470.27, 124.18, 9189.51))
-        end
-        Notify('Teleported to Bank')
-    elseif LocationDropdown.CurrentOption[1] == 'Lander CD' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(-755.70, 101.83, 8078.90))
-        end
-        Notify('Teleported to Lander CD')
-    elseif LocationDropdown.CurrentOption[1] == 'Illegal Gun Dealer' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(-463.29, 55.60, 9014.54))
-        end
-        Notify('Teleported to Illegal Gun Dealer')
-    elseif LocationDropdown.CurrentOption[1] == 'Empty Gas Station' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(4064.44, 33.6, 3877.32))
-        end
-        Notify('Teleported to Gas Station')
-    elseif LocationDropdown.CurrentOption[1] == 'WestPoint CD' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(4449.44, 45.53, 4171.30))
-        end
-        Notify('Teleported to WestPoint CD')
-    elseif LocationDropdown.CurrentOption[1] == 'Plymouth CD' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(-479.47, 17.35, 641.37))
-        end
-        Notify('Teleported to Plymouth CD')
-    elseif LocationDropdown.CurrentOption[1] == 'Statue Sniper Tower' then
-        for _ = 1,3 do
-            Player.Character:MoveTo(Vector3.new(-520.74, 389, 8636.59))
-        end
-        Notify('Teleported to top of McDoogle Building')
-    end
+function toLocation(Coordinates)
+    Player.Character:MoveTo(Coordinates))
+    Notify('Teleported to Bank')
 end
 
 function antiAFK()
