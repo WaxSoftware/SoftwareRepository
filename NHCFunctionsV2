@@ -117,10 +117,8 @@ end
 
 function RemoveAnimations(togglevalue)
   _G.AnimationsDisabled = togglevalue
-  if _G.AnimationsDiabled == false then 
-    return 
-  else
-    RunService.Heartbeat:Connect(function()
+    while _G.AnimationsDiabled do
+      wait()
       local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
       for _,animation in pairs(AnimationTracksInPlayer) do
         local PlayingAnimation = animation.Animation.AnimationId
@@ -130,7 +128,7 @@ function RemoveAnimations(togglevalue)
         end
   
       end
-    end)
+    end
   end
   
 end
