@@ -1,0 +1,239 @@
+function ChatSpy()
+    loadstring(game:HttpGet('https://pastebin.com/raw/k9Ez2Lnr', true))()
+end
+
+function Aimbot(togglevalue)
+   getgenv().ExunysDeveloperAimbot.Settings.Enabled = togglevalue
+end
+
+function toLocation()
+    if LocationDropdown.CurrentOption[1] == 'Bank' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(-1470.27, 124.18, 9189.51))
+        end
+        Notify('Teleported to Bank')
+    elseif LocationDropdown.CurrentOption[1] == 'Lander CD' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(-755.70, 101.83, 8078.90))
+        end
+        Notify('Teleported to Lander CD')
+    elseif LocationDropdown.CurrentOption[1] == 'Illegal Gun Dealer' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(-463.29, 55.60, 9014.54))
+        end
+        Notify('Teleported to Illegal Gun Dealer')
+    elseif LocationDropdown.CurrentOption[1] == 'Empty Gas Station' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(4064.44, 33.6, 3877.32))
+        end
+        Notify('Teleported to Gas Station')
+    elseif LocationDropdown.CurrentOption[1] == 'WestPoint CD' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(4449.44, 45.53, 4171.30))
+        end
+        Notify('Teleported to WestPoint CD')
+    elseif LocationDropdown.CurrentOption[1] == 'Plymouth CD' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(-479.47, 17.35, 641.37))
+        end
+        Notify('Teleported to Plymouth CD')
+    elseif LocationDropdown.CurrentOption[1] == 'Statue Sniper Tower' then
+        for _ = 1,3 do
+            Player.Character:MoveTo(Vector3.new(-520.74, 389, 8636.59))
+        end
+        Notify('Teleported to top of McDoogle Building')
+    end
+end
+
+function antiAFK()
+while _G.spinning do
+    local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+end
+end
+
+function carSpoof(carName, TopSpeed, Acceleration)
+
+local SpawnedInCar = vehiclesModule[carName]
+
+if SpawnedInCar.Gears then
+    table.insert(SpawnedInCar.Gears, TopSpeed)
+end
+
+if SpawnedInCar.AcceIeration then
+    SpawnedInCar.AcceIeration = Acceleration
+end
+end 
+
+function UnnamedESP()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua', true))()
+end
+
+function DepositCash(Amount)
+
+local args = {
+   [1] = "635",
+   [2] = "Cash",
+   [3] = "Bank",
+   [4] = Amount
+}
+
+game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
+
+end
+
+function DepositAllCash()
+    local Amount = 0
+    local PlayerUI = game.Players.LocalPlayer.PlayerGui
+    for _,uipart in(PlayerUI:GetChildren()) do
+        if uipart.Name == 'Information' then
+            for _,framepart in(uipart:GetDescendants()) do
+                if framepart.Name == 'BankFrame' then
+                    if framepart:FindFirstChild('IconLabel') then
+                        if framepart.IconLabel.ImageRectOffset == Vector2.new(44, 0) then
+                            Amount = tonumber(framepart.TextLabel.Text.sub(framepart.TextLabel.Text, 2))
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    local args = {
+        [1] = "635",
+        [2] = "Cash",
+        [3] = "Bank",
+        [4] = Amount
+     }
+     
+     game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
+
+end
+
+function WithdrawCash(Amount)
+
+local args = {
+   [1] = "635",
+   [2] = "Bank",
+   [3] = "Cash",
+   [4] = Amount
+}
+
+game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
+
+end
+
+function noRecoil()
+   Tweening.NewRecoilTween = function() end
+end
+
+function RemoveAnimations()
+	RunService.Heartbeat:Connect(function()
+
+		local AnimationTracksInPlayer = game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()
+	
+		for _, animation in pairs(AnimationTracksInPlayer) do 
+	
+			local PlayingAnimation = animation.Animation.AnimationId
+	
+			if PlayingAnimation:find('8757154017') or PlayingAnimation:find('8757153271') then
+				animation:Stop()
+			end
+		end
+	
+	end)
+
+    local mt = getrawmetatable(game)
+    make_writeable(mt)
+
+    local namecall = mt.__namecall
+
+    mt.__namecall = newcclosure(function(self, ...)
+        local method = getnamecallmethod()
+        local args = {...}
+
+        if method == 'FireServer' and tostring(self) == 'YUpdate' then
+        return
+        end
+        return namecall(self, table.unpack(args))
+    end)
+end
+
+function LargeNotify(TextInput)
+   local LargeNotifyScreen = Instance.new('ScreenGui')
+    LargeNotifyScreen.Parent = game.CoreGui
+    LargeNotifyScreen.IgnoreGuiInset = true
+   local LargeNotifyFrame = Instance.new('Frame')
+   LargeNotifyFrame.Parent = LargeNotifyScreen
+   LargeNotifyFrame.Name = 'LargeNotifyFrame'
+   LargeNotifyFrame.Transparency = 0.9
+   LargeNotifyFrame.BackgroundColor3 = Color3.new(255, 0, 0)
+   LargeNotifyFrame.Position = UDim2.new(0,0,0,0)
+   LargeNotifyFrame.Size = UDim2.new(1,0,1,0)
+   local LargeNotifyFrameLabel = Instance.new('TextLabel')
+   LargeNotifyFrameLabel.Parent = LargeNotifyFrame
+   LargeNotifyFrameLabel.Position = UDim2.new(0,0,0,0)
+   LargeNotifyFrameLabel.Size = UDim2.new(1,0,1,0)
+   LargeNotifyFrameLabel.BackgroundTransparency = 1
+   LargeNotifyFrameLabel.Text = TextInput 
+   LargeNotifyFrameLabel.Font = 'Gotham'
+   LargeNotifyFrameLabel.TextColor3 = Color3.new(30, 30, 30)
+   LargeNotifyFrameLabel.TextSize = 48
+   wait(2)
+   LargeNotifyScreen:Destroy()
+end
+
+function AutomaticGun(Value)
+   for _,t in pairs(getgc(true)) do
+      if typeof(t) == "table" and rawget(t, "AmmoReady") then 
+          rawset(t, "AmmoReady", true)
+          rawset(t, "Auto", Value)
+      end
+  end
+end
+
+function NoCombat()
+
+local mt = getrawmetatable(game)
+make_writeable(mt)
+
+local namecall = mt.__namecall
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    local args = {...}
+
+    if method == "FireServer" and tostring(self) == "RadioUpdate" then
+       return
+    end
+    return namecall(self, table.unpack(args))
+end)
+
+end
+
+function RageKnife(togglevalue)
+   getgenv().RageEnabled = togglevalue
+end
+
+function SilentAim(togglevalue)
+   getgenv().SilentAimEnabled = togglevalue
+   getgenv().AnimationsDisabled = togglevalue
+end
+
+function InstantReload(togglevalue)
+   RunService.Heartbeat:Connect(function()
+      for _, animation in pairs(game.Players.LocalPlayer.Character.Humanoid:GetPlayingAnimationTracks()) do
+          if animation.Animation.AnimationId:find('8757154656') and togglevalue == true then
+              animation:AdjustSpeed(1000)
+              animation:AdjustWeight(0)
+          elseif togglevalue == false then
+            animation:AdjustSpeed(1)
+            animation:AdjustWeight(0)
+          end
+      end
+  end)
+end
