@@ -1,5 +1,12 @@
 -- Startup Functions --
 
+--ANTI-AFK
+------------------------------------------------
+for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do
+   v:Disable()
+end
+------------------------------------------------
+
 -- Notifications
 ------------------------------------------------
 function Notify(Text)
