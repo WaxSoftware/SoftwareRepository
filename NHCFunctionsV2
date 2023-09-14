@@ -13,3 +13,9 @@ function WithdrawCash(Amount)
   local args = {[1] = "635", [2] = "Bank", [3] = "Cash", [4] = Amount}
   Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
 end
+
+function DepositCash(Amount)
+  local Amount = BankController.GetBalance("Cash")
+  local args = {[1] = "635", [2] = "Cash", [3] = "Bank", [4] = Amount}
+   game:GetService("ReplicatedStorage").Remotes:FindFirstChild("BankLocalTransfer"):FireServer(unpack(args))
+end
