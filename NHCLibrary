@@ -1,422 +1,242 @@
-function Notify(Text)
-   local notif = require(game:GetService("Players").LocalPlayer.PlayerScripts.CoreClient.NotificationHandler)
-   notif.NewNotification(Text, "WAXHAX")
-end    
+---------------------------------------------------------------------------------
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield', true))() -- UI Library
+---------------------------------------------------------------------------------
+local BankController = require(game.Players.LocalPlayer:FindFirstChild("BankController", true))
+--------------------------------------------------------------------------------------------------------------------------
+loadstring(game:HttpGet('https://raw.githubusercontent.com/WaxSoftware/SoftwareRepository/main/StartupFunctions', true))() -- Startup Functions
+--------------------------------------------------------------------------------------------------------------------------
+loadstring(game:HttpGet('https://raw.githubusercontent.com/WaxSoftware/SoftwareRepository/main/NHCFunctionsV2', true))() -- Exploit Functions
+--------------------------------------------------------------------------------------------------------------------------
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield', true))()
-
-local Event, Func do 
-   for _, v in getgc(true) do
-       if typeof(v) == "table" then
-           if rawget(v, "Verify") and typeof(v.Verify) == "Instance" then
-               Func = v
-           elseif rawget(v, "Drown") and typeof(v.Drown) == "Instance" then
-               Event = v
-           end
-       end
-   end
-end
-
-for _, RemoteList in {Event, Func} do
-   for Name, Remote in RemoteList do
-       Remote.Name = Name
-   end
-end
-------------------------------------------
-
-local Players = game:GetService("Players")
-
-local blacklist = {
-   'FatherApoc',
-   'Squareheaddude',
-   'vanzeisok',
-   'da3nieI',
-   'cityWARE_Remade',
-   'ThreateningRevolute',
-   'isanzw',
-   'Syneths',
-   'ziaxun',
-   'domieisok',
-}
-
-local couldbemod = Players:GetChildren()
-local mods = {}
-
-for _, plr in couldbemod do
-    if table.find(blacklist, plr.Name) then
-        table.insert(mods, plr.Name)
-    end
-end
-
-if #mods > 0 then
-   Notify('Reminder: The following moderators are in your server ' .. table.concat(mods, ", " ))
-else
-   Notify('No moderators online. HACK!')
-end
-
-Players.PlayerAdded:Connect(function(player)
-   if #mods > 0 then
-      Notify('Reminder: The following moderators are in your server ' .. table.concat(mods, ", " ))
-   else
-    Notify('Reminder: Still no mods online. Continue cheating.')
-   end
-end)
-
-Players.PlayerAdded:Connect(function(player)
-   if table.find(blacklist, player.Name) then
-       LargeNotify('Player ' .. player.Name .. ' has joined the server (This is a Moderator).')
-   end
-end)
-
--- Game Variables
-
-local RunService = game:GetService( 'RunService' )
-local UserInputService = game:GetService( 'UserInputService' )
-local Tweening = require(game.Players.LocalPlayer:FindFirstChild("Tweening", true))
-local vehiclesModule = require(game.ReplicatedStorage.Databases.Vehicles)
-local Player = game.Players.LocalPlayer
-
-_G.CashGrab = false
-_G.spinning = false
-_G.wantsItem = false
-_G.CashGrabLoaded = false
-------------------------------------------
-
+-- Window Creation
 local Window = Rayfield:CreateWindow({
     Name = 'WaxHax | New Haven County',
-    LoadingTitle = 'New Haven County X',
+    LoadingTitle = 'New Haven County XI',
     LoadingSubtitle = 'by imwaxx',
     ConfigurationSaving = {
         Enabled = true,
-        FileName = 'WaxConfigs',
+        FileName = 'WaxConfigurations',
     },
 })
 
-Rayfield:Notify({
-    Title = "WaxHax Notifcation",
-    Content = "Script successfully loaded.",
-    Duration = 1,
-    Image = 4483362458,
- })
+-- Tabs
+-----------------------------------------------
+local BankTab = Window:CreateTab('ATM')
+local PlayerTab = Window:CreateTab('Players')
+local GunTab = Window:CreateTab('Guns')
+local CarTab = Window:CreateTab('Vehicles')
+-----------------------------------------------
 
-local BankTab = Window:CreateTab('Wax Banking')
-local PlayerTab = Window:CreateTab('Player Modifcations')
-local GunTab = Window:CreateTab('Gun Modifications')
-local CarTab = Window:CreateTab('Car Modifcations')
-local Section10 = GunTab:CreateSection('Gun Modifications')
-local Section = CarTab:CreateSection('Car Info')
-local Section2 = PlayerTab:CreateSection('Modifications')
+-- ATM Tab
+-----------------------------------------------
 
- -----------------------------------------------
+local CashSliderSection = BankTab:CreateSection('ATM')
 
- local VehicleList = CarTab:CreateDropdown({
-    Name = "Vehicle List",
-    Options = {"Crusader","CrusaderCab","CrusaderTaxi","CrusaderTaxiClassic","CrusaderClassic","StretchCrusader","Chariot","ChariotUtility","ChariotExplorer","ChariotIntrepid","ElDorado","TrailDestroyer","Conveyer","Carpathian","Jackalope","JackalopeTaxi"},
-    CurrentOption = {"Crusader"},
-    MultipleOptions = false,
-    Flag = "Dropdown1", 
-    Callback = function(Option)
-    -- The function that takes place when the selected option is changed
-    -- The variable (Option) is a table of strings for the current selected options
-    end,
- })
-
-local Section5 = CarTab:CreateSection('Modifications')
-
- local SpeedSlider = CarTab:CreateSlider({
-    Name = "Top-Speed",
-    Range = {0, 150},
-    Increment = 5,
-    Suffix = "Speed",
-    CurrentValue = 120,
-    Flag = "Slider1",
-    Callback = function(Value)
-    -- The function that takes place when the slider changes
-    -- The variable (Value) is a number which correlates to the value the slider is currently at
-    end,
- })
-
- local AccelerationSlider = CarTab:CreateSlider({
-    Name = "Acceleration",
-    Range = {0, 15},
+local CashSlider = BankTab:CreateSlider({
+    Name = 'Cash Amount',
+    Range = {0, tonumber(BankController.GetBalance('Bank'))},
     Increment = 1,
-    Suffix = "Acceleration",
-    CurrentValue = 9,
-    Flag = "Slider2",
-    Callback = function(Value)
-    -- The function that takes place when the slider changes
-    -- The variable (Value) is a number which correlates to the value the slider is currently at
-    end,
+    Suffix = '$',
+    CurrentValue = 0,
+    Flag = 'CashSlider',
+    Callback = function(Value) end,
  })
 
-local Section6 = CarTab:CreateSection('This Can only be done ONCE PER car')
-
- local FastCarButton = CarTab:CreateButton({
-    Name = 'Spoof Selected Vehicle',
+ local WithdrawButton = BankTab:CreateButton({
+    Name = 'Withdraw Cash',
     Callback = function()
-    carSpoof(VehicleList.CurrentOption[1], SpeedSlider.CurrentValue, AccelerationSlider.CurrentValue)
-    Notify('Vehicle Spoofed.')
-    end,
+    WithdrawCash(tonumber(CashSlider.CurrentValue)) end,
  })
 
- -----------------------------------------------
+ local CashButtons = BankTab:CreateSection('ATM Functions')
 
- local ChatSpyButton = PlayerTab:CreateButton({
-    Name = 'ChatSpy',
+ local DepositButton = BankTab:CreateButton({
+    Name = 'Deposit All Cash',
     Callback = function()
-    Notify('Please Wait... Injecting Chatspy')
-    ChatSpy()
-    Notify('ChatSpy Ran Successfully')
-    end,
+    DepositCash(tonumber(BankController.GetBalance('Cash'))) end,
  })
 
- local CashButton = PlayerTab:CreateButton({
-    Name = 'Cash Stealer',
+ local RefreshCashButton = BankTab:CreateButton({
+    Name = 'Refresh Cash',
     Callback = function()
-    if _G.CashGrabLoaded then
-        Notify('CashGrab was already loaded.')
-        return
-    end
-    Notify('Cash Stealer Loaded.')
-    UserInputService.InputBegan:Connect(function(Input)
-        if Input.KeyCode == Enum.KeyCode.Q then
-            Notify('CashGrab Toggle: ' .. tostring(not _G.CashGrab))
-            _G.CashGrab = not _G.CashGrab
-            RunService.Heartbeat:Connect(GrabWallet)
-        end
-    end)
-    _G.CashGrabLoaded = true
+        CashSlider.Range = {0, tonumber(BankController.GetBalance('Bank'))}
     end,
  })
 
- local ESPButton = PlayerTab:CreateButton({
+ local MiscATM = BankTab:CreateSection('ATM Miscellaneous')
+
+ local CashGrabButton = BankTab:CreateButton({
+    Name = 'Grab Wallets | Press Q',
+    Callback = function()
+    GrabCash() end,
+ })
+
+-----------------------------------------------
+
+-- Player Tab
+-----------------------------------------------
+
+local TeleportButtons = PlayerTab:CreateSection('Player Modifications')
+
+local UnnamedESPButton = PlayerTab:CreateButton({
     Name = 'Unnamed ESP',
     Callback = function()
-      Notify('Loading ESP.')
-    UnnamedESP()
-      Notify('ESP Loaded.')
+        Notify('Loading ESP.')
+        UnnamedESP()
+        Notify('ESP Loaded.')
     end,
  })
 
- local Section3 = PlayerTab:CreateSection('Teleportation | Must be in same city as Player')
+ local ChatSpyButton = PlayerTab:CreateButton({
+    Name = 'Chat Spy',
+    Callback = function()
+        Notify('Loading Chat Spy.')
+        ChatSpy()
+        Notify('Chat Spy Loaded.')
+    end,
+ })
 
- local playerName = PlayerTab:CreateInput({
+local TeleportButtons = PlayerTab:CreateSection('Area Teleports')
+
+local playerName = PlayerTab:CreateInput({
     Name = "Player Name",
     PlaceholderText = [[Example: "XxTheBeastLegendProxX"]],
     RemoveTextAfterFocusLost = false,
     Callback = function(Text)
-    for _ = 1, 4 do
-        Player.Character:MoveTo(game.Players[Text].Character.HumanoidRootPart.Position)
-    end
+    Player.Character:MoveTo(game.Players[Text].Character.HumanoidRootPart.Position)
     Notify('Teleported to ' .. tostring(Text))
     end,
  })
 
- local LocationDropdown = PlayerTab:CreateDropdown({
-    Name = "Area Teleport",
-    Options = {"Lander CD","Illegal Gun Dealer","Plymouth CD","WestPoint CD","Bank","Empty Gas Station", "Statue Sniper Tower"},
-    CurrentOption = {"Lander CD"},
-    MultipleOptions = false,
-    Flag = "Dropdown2",
-    Callback = function(Option)
-    end,
- })
-
- local TeleportButton = PlayerTab:CreateButton({
-    Name = 'Teleport to Area',
+local TeleportIGD = PlayerTab:CreateButton({
+    Name = 'Teleport | Illegal Gun Dealer',
     Callback = function()
-        if LocationDropdown.CurrentOption[1] == 'Bank' then
-            toLocation(Vector3.new(-1470.27, 124.18, 9189.51))
-            Notify('Teleported to the Bank')
-        elseif LocationDropdown.CurrentOption[1] == 'Lander CD' then
-            toLocation(Vector3.new(-755.70, 101.83, 8078.90))
-            Notify('Teleported to Lander CD')
-        elseif LocationDropdown.CurrentOption[1] == 'Illegal Gun Dealer' then
-            toLocation(Vector3.new(-463.29, 55.60, 9014.54))
-            Notify('Teleported to Illegal Gun Dealer')
-        elseif LocationDropdown.CurrentOption[1] == 'Empty Gas Station' then
-            toLocation(Vector3.new(4064.44, 33.6, 3877.32))
-            Notify('Teleported to Gas Station')
-        elseif LocationDropdown.CurrentOption[1] == 'WestPoint CD' then
-            toLocation(Vector3.new(4449.44, 45.53, 4171.30))
-            Notify('Teleported to WestPoint CD')
-        elseif LocationDropdown.CurrentOption[1] == 'Plymouth CD' then
-            toLocation(Vector3.new(-479.47, 17.35, 641.37))
-            Notify('Teleported to Plymouth CD')
-        elseif LocationDropdown.CurrentOption[1] == 'Statue Sniper Tower' then
-            toLocation(Vector3.new(-520.74, 389, 8636.59))
-            Notify('Teleported to top of McDoogle Building')
-        end
+        toLocation(Vector3.new(-463.29, 55.60, 9014.54), 'Illegal Gun Dealer')
     end,
  })
 
- function GrabWallet()
-    
-    for _,wallet in(game.workspace:GetChildren()) do
-        if wallet.Name == 'Cash' and _G.CashGrab then
-        local check = wallet
-        firetouchinterest(Player.Character.HumanoidRootPart, wallet)
-        wallet.CanCollide = false
-        wallet.Position = Player.Character.Head.Position + Vector3.new(0, 1, 0)
-        end
-    end
-
-end
-
-local Section4 = PlayerTab:CreateSection('Miscellaneous')
-
-local Toggle = PlayerTab:CreateToggle({
-    Name = "Anti-AFK",
-    CurrentValue = false,
-    Flag = "Toggle1", 
-    Callback = function(Value)
-    Notify('Anti-AFK is ' .. tostring(Value))
-    _G.spinning = value
-    antiAFK()
+ local TeleportLCD = PlayerTab:CreateButton({
+    Name = 'Teleport | Lander CD',
+    Callback = function()
+        toLocation(Vector3.new(-755.70, 101.83, 8078.90), 'Lander CD')
     end,
  })
 
- -------------------------------------------------------------------------------
- 
- local Section7 = BankTab:CreateSection('Bank Processes')
+ local TeleportPCD = PlayerTab:CreateButton({
+    Name = 'Teleport | Plymouth CD',
+    Callback = function()
+        toLocation(Vector3.new(-479.47, 17.35, 641.37), 'Plymouth CD')
+    end,
+ })
 
- local BankDropdown = BankTab:CreateDropdown({
-   Name = "Bank Option",
-   Options = {"Deposit","Withdraw","Transfer"},
-   CurrentOption = {"Withdraw"},
-   MultipleOptions = false,
-   Flag = "Dropdown3",
-   Callback = function(Option)
-   end,
-})
+ local TeleportWCD = PlayerTab:CreateButton({
+    Name = 'Teleport | WestPoint CD',
+    Callback = function()
+        toLocation(Vector3.new(4449.44, 45.53, 4171.30), 'WestPoint CD')
+    end,
+ })
 
- local cashAmount = BankTab:CreateInput({
-   Name = "Cash Amount",
-   PlaceholderText = [[Example: "5000"]],
-   RemoveTextAfterFocusLost = false,
-   Callback = function(Text)
-      if BankDropdown.CurrentOption[1] == 'Withdraw' then
-         WithdrawCash(tonumber(Text))
-      elseif BankDropdown.CurrentOption[1] == 'Deposit' then
-         DepositCash(tonumber(Text))
-      elseif BankDropdown.CurrentOption[1] == 'Transfer | Must be Citizen' then
-         print("can't do it")
-      end
-   end,
-})
+ local TeleportSST = PlayerTab:CreateButton({
+    Name = 'Teleport | Statue Sniper Tower',
+    Callback = function()
+        toLocation(Vector3.new(-520.74, 389, 8636.59), 'Statue Sniper Tower')
+    end,
+ })
 
-local Section15 = BankTab:CreateSection('Quick Cash')
 
-local DepositAllButton = BankTab:CreateButton({
-   Name = 'Deposit All',
-   Callback = function()
-    DepositAllCash()
-   end,
-})
+-----------------------------------------------
 
-local FastCash1 = BankTab:CreateButton({
-   Name = 'Quick Cash: 55',
-   Callback = function()
-   WithdrawCash(55)
-   end,
-})
+-- Gun Tab
+-----------------------------------------------
 
-local FastCash2 = BankTab:CreateButton({
-   Name = 'Quick Cash: 315',
-   Callback = function()
-   WithdrawCash(315)
-   end,
-})
+local GunModSection = GunTab:CreateSection('Gun Modifications')
 
-local FastCash3 = BankTab:CreateButton({
-   Name = 'Quick Cash: 605',
-   Callback = function()
-   WithdrawCash(605)
-   end,
-})
-
-local FastCash4 = BankTab:CreateButton({
-   Name = 'Quick Cash: 705',
-   Callback = function()
-   WithdrawCash(705)
-   end,
-})
--- 
-
- -------------------------------------------------------------------------------
- 
 local RecoilButton = GunTab:CreateButton({
-   Name = 'No Recoil',
-   Callback = function()
-   Notify('Wam. No More recoil.')
-   noRecoil()
-   end,
-})
+    Name = 'No Recoil',
+    Callback = function()
+    Notify('No More recoil.')
+    noRecoil()
+    end,
+ })
 
-local CombatButton = GunTab:CreateButton({
-   Name = 'Anti-Combat | Broken rn (idk why)',
-   Callback = function()
-   Notify('You will never be in combat again! Enjoy.')
-   NoCombat()
-   end,
-})
+ local ReloadToggle = GunTab:CreateToggle({
+    Name = "Instant Reload | Only works on Delino's",
+    CurrentValue = false,
+    Flag = "ReloadToggle", 
+    Callback = function(Value)
+    Notify('Instant Reload: ' .. tostring(Value))
+    InstantReload(Value)
+    end,
+ })
 
-local ReloadToggle = GunTab:CreateToggle({
-   Name = "Instant Reload",
-   CurrentValue = false,
-   Flag = "Toggle7", 
-   Callback = function(Value)
-   Notify('Instant Reload: ' .. tostring(Value))
-   InstantReload(Value)
-   end,
-})
+ local Toggle = GunTab:CreateToggle({
+    Name = "Automatic Weapon",
+    CurrentValue = false,
+    Flag = "AutoToggle", 
+    Callback = function(Value)
+    Notify('Automatic Weapon: ' .. tostring(Value))
+    AutomaticGun(Value)
+    end,
+ })
 
-local Toggle = GunTab:CreateToggle({
-   Name = "Automatic Weapon",
-   CurrentValue = false,
-   Flag = "Toggle2", 
-   Callback = function(Value)
-   Notify('Gun Modded: ' .. tostring(Value))
-   AutomaticGun(Value)
-   end,
-})
+ local AimbotSection = GunTab:CreateSection('Aimbot Options')
 
-local Section10 = GunTab:CreateSection('Aimbot Options')
+ local AimbotToggle = GunTab:CreateToggle({
+    Name = "Aimbot | Use Ctrl-Lock NHC",
+    CurrentValue = false,
+    Flag = "AimbotToggle", 
+    Callback = function(Value)
+    Notify('Aimbot Value: ' .. tostring(Value))
+    Aimbot(Value)
+    end,
+ })
 
-local AimbotToggle = GunTab:CreateToggle({
-   Name = "Aimbot | Use Ctrl-Lock NHC",
-   CurrentValue = false,
-   Flag = "Toggle4", 
-   Callback = function(Value)
-   Notify('Aimbot Value: ' .. tostring(Value))
-   Aimbot(Value)
-   end,
-})
+ local RemoveAnimationsToggle = GunTab:CreateToggle({
+    Name = "Remove Animations",
+    CurrentValue = false,
+    Flag = "RemoveAnimationsToggle", 
+    Callback = function(Value)
+    Notify('Remove Animations Value: ' .. tostring(Value))
+    RemoveAnimations(Value)
+    end,
+ })
 
-local SilentAimToggle = GunTab:CreateToggle({
-   Name = "Silent Aim | Very Overpowered",
-   CurrentValue = false,
-   Flag = "Toggle5", 
-   Callback = function(Value)
-   Notify('Silent-Aim Value: ' .. tostring(Value))
-   SilentAim(Value)
-   RemoveAnimations(Value)
-   end,
-})
+ local SilentAimToggle = GunTab:CreateToggle({
+    Name = "Silent Aim",
+    CurrentValue = false,
+    Flag = "SilentAimToggle", 
+    Callback = function(Value)
+    Notify('Silent-Aim Value: ' .. tostring(Value))
+    SilentAim(Value)
+    end,
+ })
 
-local KnifeToggle = GunTab:CreateToggle({
-   Name = "Knife Rage",
-   CurrentValue = false,
-   Flag = "Toggle8", 
-   Callback = function(Value)
-   Notify('Rage Value: ' .. tostring(Value))
-   RageKnife(Value)
-   end,
+ local KnifeToggle = GunTab:CreateToggle({
+    Name = "Knife Rage",
+    CurrentValue = false,
+    Flag = "KnifeToggle", 
+    Callback = function(Value)
+    Notify('Rage Value: ' .. tostring(Value))
+    RageKnife(Value)
+    end,
+ })
+
+-----------------------------------------------
+
+-- Vehicle Tab
+-----------------------------------------------
+
+local VehicleTab = CarTab:CreateSection('Vehicles')
+
+local VehicleList = CarTab:CreateDropdown({
+    Name = "Vehicle List",
+    Options = {"Crusader","CrusaderClassic","Chariot"}, 
+    CurrentOption = {"Crusader"}, 
+    MultipleOptions = false, 
+    Flag = "VehicleDropdown", 
+    Callback = function(Option) end,
 })
+-----------------------------------------------
 
 -- Leave at bottom
 Rayfield:LoadConfiguration()
-
-------------------------------------------------------------------------------------------------------------------------
-loadstring(game:HttpGet('https://raw.githubusercontent.com/WaxSoftware/SoftwareRepository/main/NHCFunctions'))() -- functions
-------------------------------------------------------------------------------------------------------------------------
